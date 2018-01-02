@@ -1,0 +1,216 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo-pagina">
+		Cadastrar Processos
+	</ui:define>
+
+	<ui:define name="imagem">
+		<p:graphicImage library="img" name="graph.png" />
+	</ui:define>
+
+	<ui:define name="titulo">
+		<h:outputText value="Cadastrar Processos" />
+	</ui:define>
+
+	<ui:define name="subtitulo">
+		<h:outputText value="Informações importantes do sistema." />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<p:messages autoUpdate="true" closable="true" />
+
+		<h:form>
+
+			<p:wizard flowListener="#{cadastrarProcessoBean.onFlowProcess}"
+				nextLabel="Pŕoximo" backLabel="Voltar">
+				<p:tab id="etapa1" title="ETAPA 1">
+					<p:panel header="INFORMAÇÕES DO PROCESSO">
+						<p:messages />
+						<p:panelGrid columns="2" styleClass="panelgrid-noborder"
+							style="width: 100%;" layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-9">
+							<p:outputLabel value="Localidade:" styleClass="myLabel" />
+							<p:selectOneMenu id="localidade"
+								value="#{cadastrarProcessoBean.processo.localidade}"
+								panelStyle="width:180px" effect="fade" style="width:160px"
+								filter="true" filterMatchMode="startsWith">
+								<f:selectItems value="#{cadastrarProcessoBean.localidades}"
+									var="l" itemLabel="#{l.descricao}" itemValue="#{l}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Entrada Direta: " styleClass="myLabel" />
+							<h:panelGrid columns="2" style="margin-bottom:10px"
+								cellpadding="5">
+								<p:selectOneRadio id="radios"
+									value="#{cadastrarProcessoBean.processo.entradaDireta}">
+									<f:selectItem itemLabel="No Juizado:" itemValue="No Juizado" />
+									<f:selectItem itemLabel="Na Turma Recursal"
+										itemValue="Na Turma Recursal" />
+								</p:selectOneRadio>
+							</h:panelGrid>
+
+							<p:outputLabel value="Classe da Ação: " styleClass="myLabel" />
+							<p:inputText value="#{cadastrarProcessoBean.processo.classeAcao}" />
+
+							<p:outputLabel value="Tipo de Distribuição: "
+								styleClass="myLabel" />
+							<p:inputText
+								value="#{cadastrarProcessoBean.processo.tipoDistribuicao}" />
+
+							<p:outputLabel value="Pedido de Urgência: " styleClass="myLabel" />
+							<h:panelGrid columns="2" style="margin-bottom:10px"
+								cellpadding="5">
+								<p:selectOneRadio id="radiosUrgencia"
+									value="#{cadastrarProcessoBean.processo.urgencia}">
+									<f:selectItem itemLabel="Não" itemValue="false" />
+									<f:selectItem itemLabel="Sim" itemValue="true" />
+								</p:selectOneRadio>
+							</h:panelGrid>
+
+							<p:outputLabel value="Pedido de Segredo da Justiça: " />
+							<h:panelGrid columns="2" style="margin-bottom:10px"
+								cellpadding="5">
+								<p:selectOneRadio id="radiosSegredo"
+									value="#{cadastrarProcessoBean.processo.segredoJustiça}">
+									<f:selectItem itemLabel="Não" itemValue="false" />
+									<f:selectItem itemLabel="Sim" itemValue="true" />
+								</p:selectOneRadio>
+							</h:panelGrid>
+
+							<p:outputLabel value="Assunto: " styleClass="myLabel" />
+							<p:inputText value="#{cadastrarProcessoBean.processo.assunto}" />
+
+							<p:outputLabel value="Complemento Assunto: " styleClass="myLabel" />
+							<p:inputText
+								value="#{cadastrarProcessoBean.processo.complementoAssunto}" />
+
+							<p:outputLabel value="Detalhe Assunto: " styleClass="myLabel" />
+							<p:inputText
+								value="#{cadastrarProcessoBean.processo.detalheAssunto}" />
+						</p:panelGrid>
+					</p:panel>
+
+					<p:panel header="INFORMAÇÕES DO DEMANDANTE E DEMANDADO">
+						<p:messages />
+						<p:panelGrid columns="2" styleClass="panelgrid-noborder"
+							style="width: 100%" layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-9">
+
+							<p:outputLabel value="Nome do Demandante: " styleClass="myLabel" />
+							<p:inputText
+								value="#{cadastrarProcessoBean.processo.nomeDemandante}" />
+
+							<p:outputLabel value="CPF do Demandante: " styleClass="myLabel" />
+							<p:inputText
+								value="#{cadastrarProcessoBean.processo.cpfDemandante}" />
+
+							<p:outputLabel value="Nome do Demandado: " styleClass="myLabel" />
+							<p:inputText
+								value="#{cadastrarProcessoBean.processo.nomeDemandado}" />
+
+							<p:outputLabel value="CPF do Demandado: " styleClass="myLabel" />
+							<p:inputText
+								value="#{cadastrarProcessoBean.processo.cpfDemandado}" />
+						</p:panelGrid>
+					</p:panel>
+				</p:tab>
+
+				<p:tab id="etapa2" title="ETAPA 2">
+					<p:panel header="ADICIONAR O ARQUIVO LIBELO INICAL">
+						<p:panelGrid id="libelo" columns="2"
+							styleClass="panelgrid-noborder" style="width: 100%" layout="grid"
+							columnClasses="ui-grid-col-6, ui-grid-col-6">
+							<p:fileUpload label="Escolher" uploadLabel="Cadastrar"
+								cancelLabel="Cancelar" mode="advanced" dragDropSupport="true"
+								sizeLimit="5000000"
+								invalidSizeMessage="O arquivo tem que ser menor ou igual a 5 MB."
+								allowTypes="/(\.|\/)(pdf|doc|docx)$/" update="libelo"
+								fileUploadListener="#{cadastrarProcessoBean.handleFileUpload}"
+								invalidFileMessage="Arquivo inválido, selecione um arquivo PDF, DOC ou DOCX." />
+
+							<p:outputLabel value="#{cadastrarProcessoBean.arquivo.nome}"
+								rendered="#{cadastrarProcessoBean.arquivo.nome ne null}" />
+
+						</p:panelGrid>
+
+
+					</p:panel>
+
+				</p:tab>
+
+				<p:tab id="etapa3" title="ETAPA 3">
+					<p:panel header="INFORMAÇÕES">
+						<p:messages />
+						<p:panelGrid columns="2" styleClass="panelgrid-noborder"
+							style="width: 100%" layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-9">
+							<p:outputLabel value="Localidade:" styleClass="myLabel" />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.localidade}" />
+
+							<p:outputLabel value="Entrada Direta: " styleClass="myLabel" />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.entradaDireta}" />
+
+							<p:outputLabel value="Classe da Ação: " styleClass="myLabel" />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.classeAcao}" />
+
+							<p:outputLabel value="Tipo de Distribuição: "
+								styleClass="myLabel" />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.tipoDistribuicao}" />
+
+							<p:outputLabel value="Pedido de Urgência: " styleClass="myLabel" />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.urgencia eq true? 'Sim' : 'Não'}" />
+
+							<p:outputLabel value="Pedido de Segredo da Justiça: " />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.segredoJustiça eq true? 'Sim' : 'Não'}" />
+
+							<p:outputLabel value="Assunto: " styleClass="myLabel" />
+							<p:outputLabel value="#{cadastrarProcessoBean.processo.assunto}" />
+
+							<p:outputLabel value="Complemento Assunto: " styleClass="myLabel" />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.complementoAssunto}" />
+
+
+							<p:outputLabel value="Detalhe Assunto: " styleClass="myLabel" />
+							<p:outputLabel
+								value="#{cadastrarProcessoBean.processo.detalheAssunto}" />
+
+						</p:panelGrid>
+
+					</p:panel>
+
+					<p:panel header="Arquivo">
+						<p:panelGrid columns="2" styleClass="panelgrid-noborder"
+							style="width: 100%" layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-9">
+							<p:outputLabel value="Libelo Inicial" styleClass="myLabel" />
+							<p:outputLabel value="#{cadastrarProcessoBean.arquivo.nome}"
+								styleClass="myLabel" />
+
+						</p:panelGrid>
+
+					</p:panel>
+					<p:spacer />
+					<div align="center">
+						<p:commandButton value="CADASTRAR PROCESSO"
+							styleClass="button-blue-cadastrar"
+							action="#{cadastrarProcessoBean.salvar()}" />
+					</div>
+				</p:tab>
+			</p:wizard>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
