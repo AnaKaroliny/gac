@@ -25,12 +25,12 @@ public class Arquivo implements Serializable {
 	private String extensao;
 	private Tipo tipo;
 	private Processo processo;
-	
-	public Arquivo(){
-		
+
+	public Arquivo() {
+
 	}
-	
-	public Arquivo(Tipo tipo){
+
+	public Arquivo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 
@@ -67,7 +67,7 @@ public class Arquivo implements Serializable {
 	public void setExtensao(String extensao) {
 		this.extensao = extensao;
 	}
-	
+
 	@Enumerated(EnumType.STRING)
 	public Tipo getTipo() {
 		return tipo;

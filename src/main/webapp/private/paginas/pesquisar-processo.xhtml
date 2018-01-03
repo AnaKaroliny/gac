@@ -23,26 +23,25 @@
 
 	<ui:define name="conteudo">
 		<h:form id="frm">
-			<p:messages autoUpdate="true" closable="true" />
-
 			<p:messages id="msg" closable="true" />
 
 			<h:panelGroup id="filters" layout="block"
 				styleClass="panel panel-default panel-busca">
 				<div class="panel-heading">
 					<div class="form-inline">
-						<div>
+						<div class="form-group">
 							<p:outputLabel for="matricula" value="Matricula: "
 								styleClass="myLabel" />
 							<p:inputText id="matricula"
-								value="#{pesquisarProcessoBean.filter.matricula}"
-								maxlength="20" size="26" styleClass="form-control txt-busca" />
+								value="#{pesquisarProcessoBean.filter.matricula}" maxlength="20"
+								size="26" styleClass="form-control txt-busca" />
 						</div>
 
 						<p:commandButton id="btn-pesquisar" value="Pesquisar"
 							icon="fa fa-search" styleClass="button-blue btn-busca"
 							action="#{pesquisarProcessoBean.pesquisar}"
 							update="processo-table" process="@this matricula" />
+
 					</div>
 				</div>
 			</h:panelGroup>
@@ -52,15 +51,37 @@
 				rowsPerPageTemplate="50, 100" lazy="true" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false"
 				emptyMessage="Nenhum processo encontrado." styleClass="resp"
+				reflow="true"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				currentPageReportTemplate="{currentPage} de {totalPages}">
 
-				<p:column id="localidade" headerText="Localidade" width="300">
+
+				<p:column id="usuario" headerText="Usuário que Cadastrou">
+					<h:outputText value="#{processo.usuario.nome}" />
+				</p:column>
+
+				<p:column id="localidade" headerText="Localidade">
 					<h:outputText value="#{processo.localidade}" />
 				</p:column>
 
-			</p:dataTable>
+				<p:column id="demandante" headerText="Nome do Demandante">
+					<h:outputText value="#{processo.nomeDemandante}" />
+				</p:column>
 
+				<p:column id="assunto" headerText="Assunto">
+					<h:outputText value="#{processo.assunto}" />
+				</p:column>
+
+				<p:column id="acao" headerText="Ação" width="7%">
+					<center>
+						<p:link id="visualizar" outcome="processo.xhtml">
+							<i class="material-icons Blue-Grey Icon-Hover">visibility</i>
+							<f:param name="id" value="#{processo.id}" />
+						</p:link>
+						<p:tooltip for="visualizar" value="Visualizar dados" position="bottom" />
+					</center>
+				</p:column>
+			</p:dataTable>
 		</h:form>
 
 	</ui:define>

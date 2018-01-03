@@ -22,12 +22,11 @@ import org.hibernate.annotations.Type;
 
 import br.com.gac.constantes.Localidades;
 
-@NamedQueries({
-		@NamedQuery(name = "Processo.findByUsuario", query = "select p from Processo p join p.usuario u where u.matricula = :matricula") })
+@NamedQueries({ @NamedQuery(name = "Processo.findById", query = "select p from Processo p where p.id = :id") })
 
 @Entity
 @Table(name = "PROCESSO")
-public class Processo implements Serializable {	
+public class Processo implements Serializable {
 
 	private static final long serialVersionUID = -7939608821758289143L;
 

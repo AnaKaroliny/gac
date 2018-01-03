@@ -28,4 +28,8 @@ public class ProcessoBO implements Serializable {
 		return processoDAO.encontrarQuantidadeProcesso(filter);
 	}
 
+	public Processo findProcessoById(String id) {
+		return processoDAO.findProcessoById(id);
+	}
+
 }
