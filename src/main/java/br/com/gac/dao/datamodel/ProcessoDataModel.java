@@ -33,4 +33,20 @@ public class ProcessoDataModel extends LazyDataModel<Processo> implements Serial
 		setRowCount(processoBO.encontrarQuantidadeProcesso(filter).intValue());
 		return processos;
 	}
+	
+	@Override
+	public Object getRowKey(Processo processo) {
+		return processo.getId();
+	}
+
+	@Override
+	public Processo getRowData(String rowKey) {
+		Long longRowKey = Long.parseLong(rowKey);
+		for (Processo me : processos) {
+			if (me.getId().equals(longRowKey)) {
+				return me;
+			}
+		}
+		return null;
+	}
 }

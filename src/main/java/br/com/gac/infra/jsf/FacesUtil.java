@@ -77,6 +77,12 @@ public class FacesUtil implements Serializable {
 			return null;
 		}
 	}
+	
+	public String getValorParametro(String parametro) {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		return request.getParameter(parametro);
+	}
 
 	public String buscaArquivo(String path) {
 		return external.getRealPath(path);
