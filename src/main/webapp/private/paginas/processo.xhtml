@@ -75,7 +75,7 @@
 					var="arquivo" id="processo-table" paginator="true" rows="50"
 					rowsPerPageTemplate="50, 100" lazy="true"
 					paginatorPosition="bottom" paginatorAlwaysVisible="false"
-					emptyMessage="Nenhum processo encontrado." styleClass="resp"
+					emptyMessage="Nenhum arquivo encontrado." styleClass="resp"
 					reflow="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					currentPageReportTemplate="{currentPage} de {totalPages}">
@@ -86,9 +86,26 @@
 
 					<p:column id="acao" headerText="Ações" width="150"
 						styleClass="centralizado">
-						<p:link id="visualizar">
+						<!-- 						<p:link id="visualizar" onclick="PF('dlg').show();"> -->
+						<!-- 							<i class="material-icons Blue-Grey Icon-Hover">insert_drive_file</i> -->
+						<!-- 						</p:link> -->
+
+						<!-- 						<p:commandLink id="visualizar" oncomplete="PF('dlg').show();" -->
+						<!-- 							update="frm-dlg" title="Editar dados" process="@this"> -->
+						<!-- 							<i class="material-icons Blue-Grey Icon-Hover">insert_drive_file</i> -->
+						<!-- 							<f:setPropertyActionListener value="#{arquivo}" -->
+						<!-- 								target="#{arquivoBean.arquivo}" /> -->
+						<!-- 														<p:resetInput target="frm-dlg-dialogo" /> -->
+						<!-- 						</p:commandLink> -->
+
+						<p:commandLink id="visualizar"
+							action="#{arquivoBean.abrirArquivo()}" ajax="false"
+							target="_blank">
 							<i class="material-icons Blue-Grey Icon-Hover">insert_drive_file</i>
-						</p:link>
+							<f:setPropertyActionListener value="#{arquivo}"
+								target="#{arquivoBean.arquivo}" />
+						</p:commandLink>
+
 						<p:tooltip for="visualizar" value="Visualizar arquivo"
 							position="bottom" />
 
@@ -103,9 +120,15 @@
 					</p:column>
 				</p:dataTable>
 			</p:panel>
-
 		</h:form>
+		<h:form id="frm-dlg">
+			<p:dialog widgetVar="dlg" id="dialogo" width="500px"
+				header="Visualizar arquivo" modal="true" resizable="false"
+				showEffect="clip">
 
+				<p:messages id="msg-dialog" closable="true" />
+
+			</p:dialog>
+		</h:form>
 	</ui:define>
-
 </ui:composition>

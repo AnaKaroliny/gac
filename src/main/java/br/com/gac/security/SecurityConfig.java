@@ -14,14 +14,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String URL_DASHBOARD = "/private/dashboard.xhtml";
 	
-	private static final String URL_CADASTRAR_GRUPO_USUARIO = "/private/usuarios/cadastrar-grupo-usuario.xhtml";
-	private static final String URL_LISTAR_GRUPOS_USUARIOS = "/private/usuarios/pesquisar-grupos-usuarios.xhtml";
-
 	private static final String URL_CADASTRAR_USUARIO = "/private/usuarios/cadastrar-usuario.xhtml";
 	private static final String URL_LISTAR_USUARIOS = "/private/usuarios/pesquisar-usuarios.xhtml";
 	
-	private static final String URL_MANTER_PERMISSOES = "/private/usuarios/permissoes.xhtml";
-
 	private static final String URL_MANTER_CONFIGURACAO_EMAIL = "/private/configuracoes/configuracao-email.xhtml";
 	private static final String URL_CADASTRAR_PROCESSO = "/private/paginas/cadastrar-processo.xhtml";
 	
@@ -78,9 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(URLS_ACESSO_PUBLICO).permitAll()
 				.antMatchers(URL_CADASTRAR_USUARIO).hasRole("CADASTRAR_USUARIO")
 				.antMatchers(URL_LISTAR_USUARIOS).hasRole("LISTAR_USUARIOS")
-				.antMatchers(URL_CADASTRAR_GRUPO_USUARIO).hasRole("CADASTRAR_GRUPO_USUARIO")
-				.antMatchers(URL_LISTAR_GRUPOS_USUARIOS).hasRole("LISTAR_GRUPOS_USUARIOS")
-				.antMatchers(URL_MANTER_PERMISSOES).hasRole("MANTER_PERMISSOES")
 				.antMatchers(URL_MANTER_CONFIGURACAO_EMAIL).hasRole("MANTER_CONFIGURACAO_EMAIL")
 				.antMatchers(URLS_ACESSO_AUTENTICADO).authenticated()
 				.antMatchers(URL_CADASTRAR_PROCESSO).authenticated()

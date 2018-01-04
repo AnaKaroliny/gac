@@ -1,27 +1,19 @@
 package br.com.gac.listener;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import br.com.gac.dao.PermissaoDAO;
+import br.com.gac.constantes.Perfil;
 import br.com.gac.infra.cdi.CDIServiceLocator;
-import br.com.gac.model.GrupoUsuario;
-import br.com.gac.model.Permissao;
 import br.com.gac.model.Usuario;
-import br.com.gac.service.GrupoUsuarioService;
 import br.com.gac.service.UsuarioService;
 
 @WebListener
 public class InitServletContext implements ServletContextListener {
 	private ServletContext context;
 	private UsuarioService usuarioService = CDIServiceLocator.getBean(UsuarioService.class);
-	private GrupoUsuarioService grupoUsuarioService = CDIServiceLocator.getBean(GrupoUsuarioService.class);
-	private PermissaoDAO permissaoDAO = CDIServiceLocator.getBean(PermissaoDAO.class);
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
@@ -41,7 +33,7 @@ public class InitServletContext implements ServletContextListener {
 
 	private Usuario buscaUsuarioPadrao() {
 		context.log("Buscando usuário com perfil de ADMINISTRADOR...");
-		return usuarioService.findByMatricula("uncqadmin");
+		return usuarioService.findByMatricula("uncqadmin"); //1031
 	}
 
 	private void criaUsuario(Usuario usuario) {
@@ -52,7 +44,7 @@ public class InitServletContext implements ServletContextListener {
 			usuario.setCpf("448.484.101-00");
 			usuario.setEmail("sistemas_lapis@unicatolicaquixada.edu.br");
 			usuario.setMatricula("uncqadmin");
-			usuario.setGrupos(Arrays.asList(criarGrupoAdministradores()));
+			usuario.setPerfil(Perfil.ADMINISTRADOR);
 
 			context.log("Usuário \"uncqadmin\" criado com sucesso!");
 
@@ -62,29 +54,4 @@ public class InitServletContext implements ServletContextListener {
 		}
 	}
 
-	private GrupoUsuario criarGrupoAdministradores() {
-		context.log("Criando grupo de usuários ADMINISTRADORES...");
-		GrupoUsuario grupo = new GrupoUsuario("ADMINISTRADORES");
-		grupo.setPermissoes(criarPermissoes());
-		grupo = grupoUsuarioService.save(grupo);
-		return grupo;
-	}
-
-	private List<Permissao> criarPermissoes() {
-		context.log("Criando permissões para o grupo de usuários ADMINISTRADORES...");
-		Permissao cadastrarUsuario = permissaoDAO
-				.save(new Permissao("CADASTRAR_USUARIO", "Cadastrar usuários no sistema"));
-		Permissao listarUsuarios = permissaoDAO
-				.save(new Permissao("LISTAR_USUARIOS", "Listar usuários cadastrados no sistema"));
-		Permissao cadastrarGrupoUsuario = permissaoDAO
-				.save(new Permissao("CADASTRAR_GRUPO_USUARIO", "Cadastrar grupos de usuários no sistema"));
-		Permissao listarGruposUsuarios = permissaoDAO
-				.save(new Permissao("LISTAR_GRUPOS_USUARIOS", "Listar grupos de usuários cadastrados no sistema"));
-		Permissao manterConfiguracaoEmail = permissaoDAO
-				.save(new Permissao("MANTER_CONFIGURACAO_EMAIL", "Manter configuração do e-mail do sistema"));
-		Permissao manterPermissoes = permissaoDAO
-				.save(new Permissao("MANTER_PERMISSOES", "Manter permissões do sistema"));
-		return Arrays.asList(cadastrarUsuario, listarUsuarios, cadastrarGrupoUsuario, listarGruposUsuarios,
-				manterConfiguracaoEmail, manterPermissoes);
-	}
 }
