@@ -2,7 +2,6 @@ package br.com.gac.security;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -28,9 +27,10 @@ public class AppUserDetailsService implements UserDetailsService {
 
 		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
-		List<String> permissoes = usuarioDAO.permissoes(usuario);
-		permissoes.forEach(p -> authorities.add(new SimpleGrantedAuthority("ROLE_" + p.toUpperCase())));
+		String perfil = usuarioDAO.permissoes(usuario).name();
+		authorities.add(new SimpleGrantedAuthority("ROLE_" + perfil.toUpperCase()));
 
 		return authorities;
 	}
+
 }

@@ -61,37 +61,6 @@
 						</p:link></li>
 				</ul></li>
 
-			<li class="treeview"><p:link
-					rendered="#{sessaoBean.hasRole('CADASTRAR_GRUPO_USUARIO') or sessaoBean.hasRole('LISTAR_GRUPOS_USUARIOS')}"
-					href="">
-					<i class="fa fa-fw fa fa-users" />
-					<span>Grupos de Usuários</span>
-					<i class="fa fa-angle-left pull-right"></i>
-				</p:link>
-
-				<ul class="treeview-menu">
-					<li><p:link
-							rendered="#{sessaoBean.hasRole('CADASTRAR_GRUPO_USUARIO')}"
-							href="/private/usuarios/cadastrar-grupo-usuario.xhtml">
-							<i class="fa fa-fw fa-plus"> </i>
-							<span>Cadastrar</span>
-						</p:link></li>
-
-					<li><p:link
-							rendered="#{sessaoBean.hasRole('LISTAR_GRUPOS_USUARIOS')}"
-							href="/private/usuarios/pesquisar-grupos-usuarios.xhtml">
-							<i class="fa fa-fw fa fa-list-ul"> </i>
-							<span>Listar</span>
-						</p:link></li>
-				</ul></li>
-
-			<li><p:link
-					rendered="#{sessaoBean.hasRole('MANTER_PERMISSOES')}"
-					href="/private/usuarios/permissoes.xhtml">
-					<i class="fa fa-fw fa-key" />
-					<span>Permissões</span>
-				</p:link></li>
-
 			<li><p:link
 					rendered="#{sessaoBean.hasRole('MANTER_CONFIGURACAO_EMAIL')}"
 					href="/private/configuracoes/configuracao-email.xhtml">

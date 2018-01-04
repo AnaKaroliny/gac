@@ -42,13 +42,9 @@ public class UsuarioService implements Serializable {
 		usuario.mudarStatus();
 		usuarioDAO.save(usuario);
 	}
-	
+
 	public Usuario findByMatricula(String matricula) {
 		return usuarioDAO.findByMatricula(matricula);
-	}
-
-	public Usuario findUsuarioComGruposByMatricula(String matricula) {
-		return usuarioDAO.findUsuarioComGruposByMatricula(matricula);
 	}
 
 	private String criptografar(String senha) {

@@ -1,19 +1,16 @@
 package br.com.gac.bean;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.gac.dao.GrupoUsuarioDAO;
 import br.com.gac.dao.UsuarioDAO;
 import br.com.gac.dao.datamodel.UsuarioDataModel;
 import br.com.gac.dao.filter.UsuarioFilter;
 import br.com.gac.infra.jsf.MessagesHelper;
-import br.com.gac.model.GrupoUsuario;
 import br.com.gac.model.Usuario;
 import br.com.gac.service.UsuarioService;
 import br.com.gac.util.CpfUtil;
@@ -32,9 +29,6 @@ public class PesquisarUsuariosBean implements Serializable {
 	private UsuarioService service;
 
 	@Inject
-	private GrupoUsuarioDAO grupoDAO;
-
-	@Inject
 	private MessagesHelper helper;
 
 	@Inject
@@ -43,8 +37,6 @@ public class PesquisarUsuariosBean implements Serializable {
 	private Usuario selecionado;
 
 	private UsuarioDataModel usuarios;
-
-	private List<GrupoUsuario> grupos;
 
 	private UsuarioFilter filter = new UsuarioFilter();
 
@@ -76,13 +68,6 @@ public class PesquisarUsuariosBean implements Serializable {
 
 	public UsuarioFilter getFilter() {
 		return filter;
-	}
-
-	public List<GrupoUsuario> getGrupos() {
-		if (grupos == null)
-			this.grupos = grupoDAO.findAll();
-
-		return grupos;
 	}
 
 	public Usuario getSelecionado() {

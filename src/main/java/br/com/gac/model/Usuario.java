@@ -1,26 +1,24 @@
 package br.com.gac.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.gac.constantes.Perfil;
 import br.com.gac.util.AES;
 
 @Entity
@@ -41,11 +39,11 @@ public class Usuario implements Serializable {
 
 	private String senha;
 
-	private List<GrupoUsuario> grupos;
-
 	private boolean ativo = true;
 
 	private boolean mudarSenha = true;
+
+	private Perfil perfil;
 
 	public Usuario() {
 
@@ -118,17 +116,6 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	@Size(min = 1, message = "Selecione pelo menos um grupo!")
-	@ManyToMany
-	@JoinTable(name = "USUARIO_GRUPO", joinColumns = @JoinColumn(name = "ID_USUARIO"), inverseJoinColumns = @JoinColumn(name = "ID_GRUPO"))
-	public List<GrupoUsuario> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(List<GrupoUsuario> grupos) {
-		this.grupos = grupos;
-	}
-
 	@Column(name = "USU_IS_ATIVO")
 	@Type(type = "true_false")
 	public boolean isAtivo() {
@@ -147,6 +134,16 @@ public class Usuario implements Serializable {
 
 	public void setMudarSenha(boolean mudarSenha) {
 		this.mudarSenha = mudarSenha;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 
 	@Transient

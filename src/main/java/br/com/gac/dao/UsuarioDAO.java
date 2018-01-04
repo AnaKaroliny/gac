@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import br.com.gac.constantes.Perfil;
 import br.com.gac.dao.filter.UsuarioFilter;
 import br.com.gac.model.Usuario;
 
@@ -31,16 +32,6 @@ public class UsuarioDAO implements Serializable {
 	public Usuario findByMatricula(String matricula) {
 		try {
 			return manager.createQuery("SELECT u FROM Usuario u WHERE u.matricula = :matricula AND u.ativo = 'T'",
-					Usuario.class).setParameter("matricula", matricula).getSingleResult();
-		} catch (NoResultException e) {
-			System.err.println("Usuário não encontrado!");
-		}
-		return null;
-	}
-
-	public Usuario findUsuarioComGruposByMatricula(String matricula) {
-		try {
-			return manager.createQuery("SELECT u FROM Usuario u JOIN FETCH u.grupos WHERE u.matricula = :matricula",
 					Usuario.class).setParameter("matricula", matricula).getSingleResult();
 		} catch (NoResultException e) {
 			System.err.println("Usuário não encontrado!");
@@ -94,9 +85,9 @@ public class UsuarioDAO implements Serializable {
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
-	public List<String> permissoes(Usuario usuario) {
+	public Perfil permissoes(Usuario usuario) {
 		return manager.createQuery(
-				"SELECT DISTINCT p.nome FROM Usuario u INNER JOIN u.grupos g INNER JOIN g.permissoes p WHERE u = :usuario AND g.ativo = 'T'",
-				String.class).setParameter("usuario", usuario).getResultList();
+				"SELECT DISTINCT u.perfil FROM Usuario u WHERE u = :usuario AND u.ativo = 'T'",
+				Perfil.class).setParameter("usuario", usuario).getSingleResult();
 	}
 }
