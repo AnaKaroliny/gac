@@ -27,5 +27,9 @@ public class ArquivoBO implements Serializable {
 	public Long encontrarQuantidadeArquivo(ArquivoFilter filter) {
 		return arquivoDAO.encontrarQuantidadeArquivo(filter);
 	}
+	
+	public Arquivo findArquivoById(Integer id){
+		return arquivoDAO.findArquivoById(id);
+	}
 
 }

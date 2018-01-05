@@ -21,6 +21,16 @@
 		<h:outputText value="Informações importantes do sistema." />
 	</ui:define>
 
+	<ui:define name="links">
+		<h:form>
+			<p:commandLink action="pesquisar-processo.xhtml?faces-redirect=true"
+				styleClass="btn btn-orange" title="Listar Processos" ajax="false">
+				<div class="fa fa-th-list icon-link iconLink" />
+				Listar
+			</p:commandLink>
+		</h:form>
+	</ui:define>
+
 	<ui:define name="conteudo">
 		<h:form id="frm">
 			<p:messages id="msg" closable="true" />
@@ -61,13 +71,10 @@
 					<p:outputLabel
 						value="#{pesquisarProcessoBean.processoSelecionado.complementoAssunto}" />
 
-
 					<p:outputLabel value="Detalhe Assunto: " styleClass="myLabel" />
 					<p:outputLabel
 						value="#{pesquisarProcessoBean.processoSelecionado.detalheAssunto}" />
-
 				</p:panelGrid>
-
 			</p:panel>
 
 			<p:panel>
@@ -80,41 +87,51 @@
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					currentPageReportTemplate="{currentPage} de {totalPages}">
 
+					<p:column id="tipo" headerText="Tipo" width="300">
+						<h:outputText value="#{arquivo.tipo.descricao}" />
+					</p:column>
+
 					<p:column id="nome" headerText="Nome">
 						<h:outputText value="#{arquivo.nome}" />
 					</p:column>
 
 					<p:column id="acao" headerText="Ações" width="150"
 						styleClass="centralizado">
-						<!-- 						<p:link id="visualizar" onclick="PF('dlg').show();"> -->
-						<!-- 							<i class="material-icons Blue-Grey Icon-Hover">insert_drive_file</i> -->
-						<!-- 						</p:link> -->
 
-						<!-- 						<p:commandLink id="visualizar" oncomplete="PF('dlg').show();" -->
-						<!-- 							update="frm-dlg" title="Editar dados" process="@this"> -->
-						<!-- 							<i class="material-icons Blue-Grey Icon-Hover">insert_drive_file</i> -->
-						<!-- 							<f:setPropertyActionListener value="#{arquivo}" -->
-						<!-- 								target="#{arquivoBean.arquivo}" /> -->
-						<!-- 														<p:resetInput target="frm-dlg-dialogo" /> -->
-						<!-- 						</p:commandLink> -->
+						<p:commandLink id="visualizar" oncomplete="PF('dlg').show();"
+							update="frm-dlg:dialog" title="Visualizar arquivo"
+							rendered="#{arquivo.extensao eq 'image/jpeg' or arquivo.extensao eq 'image/png'}">
+							<i class="material-icons Blue-Grey Icon-Hover">insert_drive_file</i>
+							<f:param name="id" value="#{arquivo.id}" />
+							<f:setPropertyActionListener value="#{arquivo}"
+								target="#{recuperaArquivoBean.arquivo}" />
+						</p:commandLink>
 
-						<p:commandLink id="visualizar"
-							action="#{arquivoBean.abrirArquivo()}" ajax="false"
-							target="_blank">
+						<p:commandLink id="visualizar-pdf"
+							action="#{recuperaArquivoPdfBean.abrirArquivo()}" ajax="false"
+							target="_blank"
+							rendered="#{arquivo.extensao eq 'application/pdf'}">
 							<i class="material-icons Blue-Grey Icon-Hover">insert_drive_file</i>
 							<f:setPropertyActionListener value="#{arquivo}"
-								target="#{arquivoBean.arquivo}" />
+								target="#{recuperaArquivoPdfBean.arquivo}" />
 						</p:commandLink>
 
 						<p:tooltip for="visualizar" value="Visualizar arquivo"
 							position="bottom" />
 
+						<p:tooltip for="visualizar-pdf" value="Visualizar arquivo"
+							position="bottom" />
+
 						<p:spacer width="10" height="0" />
 
-
-						<p:link id="download">
+						<p:commandLink id="download" immediate="true" ajax="false"
+							title="Download">
 							<i class="material-icons Blue-Grey Icon-Hover">file_download</i>
-						</p:link>
+							<f:setPropertyActionListener value="#{arquivo}"
+								target="#{recuperaArquivoPdfBean.arquivo}" />
+							<p:fileDownload value="#{recuperaArquivoPdfBean.file}" />
+						</p:commandLink>
+
 						<p:tooltip for="download" value="Download arquivo"
 							position="bottom" />
 					</p:column>
@@ -122,12 +139,21 @@
 			</p:panel>
 		</h:form>
 		<h:form id="frm-dlg">
-			<p:dialog widgetVar="dlg" id="dialogo" width="500px"
-				header="Visualizar arquivo" modal="true" resizable="false"
-				showEffect="clip">
+			<p:dialog widgetVar="dlg" id="dialog" header="Visualizar arquivo"
+				showEffect="clip" hideEffect="clip" modal="true" position="center"
+				closeOnEscape="true" resizable="false" responsive="true">
 
 				<p:messages id="msg-dialog" closable="true" />
 
+				<p:panelGrid columns="1" layout="grid"
+					styleClass="panelgrid-noborder">
+					<center>
+						<p:graphicImage value="#{recuperaArquivoBean.foto}"
+							style="max-width:900px; max-height:500px">
+							<f:param name="id" value="#{recuperaArquivoBean.arquivo.id}" />
+						</p:graphicImage>
+					</center>
+				</p:panelGrid>
 			</p:dialog>
 		</h:form>
 	</ui:define>
