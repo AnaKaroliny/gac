@@ -56,7 +56,7 @@ public class CadastrarProcessoBean implements Serializable {
 	public void salvar() {
 		try {
 			processo.setUsuario(usuarioLogado);
-//			processo.adicionaArquivo(arquivo);
+			processo.adicionaArquivo(arquivo);
 			processoBO.save(processo);
 			helper.addInfoMessage("Processo salvo com sucesso!");
 		} catch (Exception e) {

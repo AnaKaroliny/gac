@@ -124,14 +124,15 @@
 					<p:panel header="ADICIONAR O ARQUIVO LIBELO INICAL">
 						<p:panelGrid id="libelo" columns="2"
 							styleClass="panelgrid-noborder" style="width: 100%" layout="grid"
-							columnClasses="ui-grid-col-6, ui-grid-col-6">
+							columnClasses="ui-grid-col-7, ui-grid-col-6">
 							<p:fileUpload label="Escolher" uploadLabel="Cadastrar"
 								cancelLabel="Cancelar" mode="advanced" dragDropSupport="true"
-								sizeLimit="5000000"
+								sizeLimit="5000000" fileLimit="1"
+								fileLimitMessage="Apenas um arquivo por vez!"
 								invalidSizeMessage="O arquivo tem que ser menor ou igual a 5 MB."
-								allowTypes="/(\.|\/)(pdf|doc|docx)$/" update="libelo"
+								allowTypes="/(\.|\/)(jpe?g|png|pdf)$/" update="libelo"
 								fileUploadListener="#{cadastrarProcessoBean.handleFileUpload}"
-								invalidFileMessage="Arquivo inválido, selecione um arquivo PDF, DOC ou DOCX." />
+								invalidFileMessage="Arquivo inválido, selecione um arquivo JPEG, PNG ou PDF." />
 
 							<p:outputLabel value="#{cadastrarProcessoBean.arquivo.nome}"
 								rendered="#{cadastrarProcessoBean.arquivo.nome ne null}" />

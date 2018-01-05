@@ -1,5 +1,7 @@
 package br.com.gac.bean;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.faces.context.FacesContext;
@@ -7,13 +9,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
 import br.com.gac.model.Arquivo;
 
 @Named
 @ViewScoped
-public class ArquivoBean implements Serializable {
+public class RecuperaArquivoPdfBean implements Serializable {
 
-	private static final long serialVersionUID = 2038819097355392380L;
+	private static final long serialVersionUID = 1378513445589387646L;
 
 	private Arquivo arquivo = new Arquivo();
 
@@ -33,6 +38,11 @@ public class ArquivoBean implements Serializable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public StreamedContent getFile() {
+		InputStream stream = new ByteArrayInputStream(arquivo.getArquivo());
+		return new DefaultStreamedContent(stream, "application/pdf", arquivo.getNome());
 	}
 
 	public Arquivo getArquivo() {

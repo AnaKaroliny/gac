@@ -9,9 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import br.com.gac.constantes.Tipo;
+
+@NamedQueries({
+		@NamedQuery(name = "Arquivo.findById", query = "select a from Arquivo a where a.id = :id") })
 
 @Entity
 @Table(name = "ARQUIVO")

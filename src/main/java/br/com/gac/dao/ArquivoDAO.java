@@ -33,5 +33,9 @@ public class ArquivoDAO implements Serializable {
 				.setParameter("id", filter.getId()).getSingleResult();
 
 	}
+	
+	public Arquivo findArquivoById(Integer id){
+		return manager.createNamedQuery("Arquivo.findById", Arquivo.class).setParameter("id", id).getSingleResult();
+	}
 
 }
