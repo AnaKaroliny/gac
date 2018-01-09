@@ -27,18 +27,18 @@
 					<span>Dashboard</span>
 				</p:link></li>
 
-			<li><p:link href="/private/paginas/cadastrar-processo.xhtml">
+			<li><p:link rendered="#{sessaoBean.juizAuditor}" href="/private/paginas/cadastrar-processo.xhtml">
 					<i class="fa fa-fw fa-gavel" />
 					<span>Cadastrar Processo</span>
 				</p:link></li>
 
-			<li><p:link href="/private/paginas/pesquisar-processo.xhtml">
+			<li><p:link rendered="#{sessaoBean.juizAuditor}" href="/private/paginas/pesquisar-processo.xhtml">
 					<i class="fa fa-fw fa-search" />
 					<span>Pesquisar Processo</span>
 				</p:link></li>
 
 			<li class="treeview"><p:link
-					rendered="#{sessaoBean.hasRole('CADASTRAR_USUARIO') or sessaoBean.hasRole('LISTAR_USUARIOS')}"
+					rendered="#{sessaoBean.administrador}"
 					href="">
 					<i class="fa fa-fw fa fa-user" />
 					<span>Usuários</span>
@@ -47,22 +47,22 @@
 
 				<ul class="treeview-menu">
 					<li><p:link
-							rendered="#{sessaoBean.hasRole('CADASTRAR_USUARIO')}"
+							rendered="#{sessaoBean.administrador}"
 							href="/private/usuarios/cadastrar-usuario.xhtml">
 							<i class="fa fa-fw fa-plus"> </i>
 							<span>Cadastrar</span>
 						</p:link></li>
 
 					<li><p:link
-							rendered="#{sessaoBean.hasRole('LISTAR_USUARIOS')}"
+							rendered="#{sessaoBean.administrador}"
 							href="/private/usuarios/pesquisar-usuarios.xhtml">
 							<i class="fa fa-fw fa fa-list-ul"> </i>
 							<span>Listar</span>
 						</p:link></li>
 				</ul></li>
 
-			<li><p:link
-					rendered="#{sessaoBean.hasRole('MANTER_CONFIGURACAO_EMAIL')}"
+			<li><p:link 
+					rendered="#{sessaoBean.administrador}"
 					href="/private/configuracoes/configuracao-email.xhtml">
 					<i class="fa fa-fw fa-envelope" />
 					<span>E-mail</span>

@@ -66,4 +66,12 @@ public class SessaoBean implements Serializable {
 	public Integer getAnoAtual() {
 		return dataUtil.getAnoAtual();
 	}
+	
+	public boolean isAdministrador() {
+		return external.isUserInRole("ADMINISTRADOR");
+	}
+	
+	public boolean isJuizAuditor() {
+		return external.isUserInRole("JUIZ_AUDITOR");
+	}
 }

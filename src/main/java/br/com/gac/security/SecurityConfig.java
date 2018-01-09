@@ -19,6 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static final String URL_MANTER_CONFIGURACAO_EMAIL = "/private/configuracoes/configuracao-email.xhtml";
 	private static final String URL_CADASTRAR_PROCESSO = "/private/paginas/cadastrar-processo.xhtml";
+	private static final String URL_LISTAR_PROCESSO = "/private/paginas/pesquisar-processo.xhtml";
 	
 	/**
 	 * URLS DE ACESSO PÚBLICO
@@ -71,11 +72,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			.authorizeRequests()
 				.antMatchers(URLS_ACESSO_PUBLICO).permitAll()
-				.antMatchers(URL_CADASTRAR_USUARIO).hasRole("CADASTRAR_USUARIO")
-				.antMatchers(URL_LISTAR_USUARIOS).hasRole("LISTAR_USUARIOS")
-				.antMatchers(URL_MANTER_CONFIGURACAO_EMAIL).hasRole("MANTER_CONFIGURACAO_EMAIL")
+				.antMatchers(URL_CADASTRAR_USUARIO).hasRole("ADMINISTRADOR")
+				.antMatchers(URL_LISTAR_USUARIOS).hasRole("ADMINISTRADOR")
+				.antMatchers(URL_MANTER_CONFIGURACAO_EMAIL).hasRole("ADMINISTRADOR")
+				.antMatchers(URL_CADASTRAR_PROCESSO).hasAnyRole("JUIZ_AUDITOR")
+				.antMatchers(URL_LISTAR_PROCESSO).hasAnyRole("JUIZ_AUDITOR")
 				.antMatchers(URLS_ACESSO_AUTENTICADO).authenticated()
-				.antMatchers(URL_CADASTRAR_PROCESSO).authenticated()
 				.and()
 
 			.formLogin()

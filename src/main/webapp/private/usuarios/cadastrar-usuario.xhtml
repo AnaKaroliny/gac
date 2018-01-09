@@ -5,6 +5,10 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<f:metadata>
+		<f:viewParam name="id" value="#{cadastrarUsuarioBean.usuario}" />
+	</f:metadata>
+
 	<ui:define name="titulo-pagina">
 		<h:outputText value="Cadastrar Usuário" />
 	</ui:define>
@@ -106,19 +110,18 @@
 			<h:panelGroup layout="block" styleClass="row">
 				<div class="col-md-12">
 					<div class="form-group">
-						<p:outputLabel id="grupos" value="Grupos de usuários:"
-							styleClass="myLabel" for="cb-grupos" />
+						<p:outputLabel id="perfil" value="Perfil:" styleClass="myLabel"
+							for="perfis" />
 
 						<div class="inline-checkbox">
-							<p:selectManyCheckbox id="cb-grupos" required="true" columns="5"
-								converter="grupoUsuarioConverter"
-								value="#{cadastrarUsuarioBean.usuario.grupos}"
+							<p:selectOneMenu id="perfis" required="true" columns="5"
+								value="#{cadastrarUsuarioBean.usuario.perfil}"
 								layout="responsive">
-								<f:selectItems value="#{cadastrarUsuarioBean.grupos}"
-									var="grupo" itemLabel="#{grupo.nome}" itemValue="#{grupo}" />
+								<f:selectItems value="#{cadastrarUsuarioBean.perfis}"
+									var="perfil" itemLabel="#{perfil.descricao}"
+									itemValue="#{perfil}" />
 
-								<f:attribute name="collectionType" value="java.util.ArrayList" />
-							</p:selectManyCheckbox>
+							</p:selectOneMenu>
 						</div>
 					</div>
 				</div>

@@ -24,9 +24,13 @@ public class UsuarioDAO implements Serializable {
 
 	@PersistenceContext(unitName = "gac-pu")
 	private EntityManager manager;
-	
+
 	public Usuario save(Usuario usuario) {
 		return manager.merge(usuario);
+	}
+
+	public Usuario getPorId(Long id) {
+		return manager.find(Usuario.class, id);
 	}
 
 	public Usuario findByMatricula(String matricula) {
@@ -40,7 +44,7 @@ public class UsuarioDAO implements Serializable {
 	}
 
 	public List<Usuario> findAll() {
-		return manager.createQuery("FROM Usuario u JOIN FETCH u.grupos", Usuario.class).getResultList();
+		return manager.createQuery("FROM Usuario u", Usuario.class).getResultList();
 	}
 
 	public List<Usuario> pesquisar(int first, int pageSize, UsuarioFilter filter) {
@@ -48,8 +52,6 @@ public class UsuarioDAO implements Serializable {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
 		Root<Usuario> root = criteria.from(Usuario.class);
-
-		root.fetch("grupos");
 
 		Predicate[] predicates = criarRestricoes(filter, builder, root);
 		criteria.where(predicates);
@@ -86,8 +88,7 @@ public class UsuarioDAO implements Serializable {
 	}
 
 	public Perfil permissoes(Usuario usuario) {
-		return manager.createQuery(
-				"SELECT DISTINCT u.perfil FROM Usuario u WHERE u = :usuario AND u.ativo = 'T'",
+		return manager.createQuery("SELECT DISTINCT u.perfil FROM Usuario u WHERE u = :usuario AND u.ativo = 'T'",
 				Perfil.class).setParameter("usuario", usuario).getSingleResult();
 	}
 }
