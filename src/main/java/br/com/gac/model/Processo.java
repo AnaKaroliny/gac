@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 import br.com.gac.constantes.Localidades;
+import br.com.gac.constantes.Status;
 
 @NamedQueries({ @NamedQuery(name = "Processo.findById", query = "select p from Processo p where p.id = :id") })
 
@@ -46,6 +47,7 @@ public class Processo implements Serializable {
 	private String cpfDemandado;
 	private Usuario usuario;
 	private List<Arquivo> arquivos;
+	private Status status;
 
 	public void adicionaArquivo(Arquivo arquivo) {
 		arquivos = new ArrayList<>();
@@ -196,6 +198,15 @@ public class Processo implements Serializable {
 
 	public void setArquivos(List<Arquivo> arquivos) {
 		this.arquivos = arquivos;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override

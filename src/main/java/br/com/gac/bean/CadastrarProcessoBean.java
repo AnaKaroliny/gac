@@ -12,6 +12,7 @@ import org.primefaces.event.FlowEvent;
 
 import br.com.gac.bo.ProcessoBO;
 import br.com.gac.constantes.Localidades;
+import br.com.gac.constantes.Status;
 import br.com.gac.constantes.Tipo;
 import br.com.gac.infra.jsf.MessagesHelper;
 import br.com.gac.model.Arquivo;
@@ -53,15 +54,18 @@ public class CadastrarProcessoBean implements Serializable {
 
 	}
 
-	public void salvar() {
+	public String salvar() {
 		try {
 			processo.setUsuario(usuarioLogado);
+			processo.setStatus(Status.ANALISE);
 			processo.adicionaArquivo(arquivo);
-			processoBO.save(processo);
+			processoBO.save(processo);	
 			helper.addInfoMessage("Processo salvo com sucesso!");
+			return "/private/paginas/sucesso.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			e.printStackTrace();
 			helper.addErrorMessage(e.getMessage());
+			return null;
 		}
 	}
 

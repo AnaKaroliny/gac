@@ -103,7 +103,17 @@
 no-repeat
 
 
+
+
+
+
+
  
+
+
+
+
+
 
 
 ;
@@ -1041,4 +1051,14 @@ legend {
 
 .button-blue-cadastrar:hover {
 	background: #0079F2 !important;
+}
+
+.dialog-sucesso {
+	margin-left: 100px;
+}
+
+@media ( max-width : 1177px) {
+	.dialog-sucesso {
+		
+	}
 }

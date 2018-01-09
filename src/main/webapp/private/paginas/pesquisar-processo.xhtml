@@ -68,8 +68,8 @@
 					<h:outputText value="#{processo.nomeDemandante}" />
 				</p:column>
 
-				<p:column id="assunto" headerText="Assunto">
-					<h:outputText value="#{processo.assunto}" />
+				<p:column id="status" headerText="Status">
+					<h:outputText value="#{processo.status.descricao}" />
 				</p:column>
 
 				<p:column id="acao" headerText="Ação" width="7%">
